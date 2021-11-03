@@ -126,7 +126,7 @@ In lamp role I'm going to write codes for
 
 ​                                                   * *Creating domain virtual host*
 
-These main tasks for lamp role are written to playbook file ```    lamp/tasks/main.yml```                               
+These main tasks for lamp role are written to file ```    lamp/tasks/main.yml```                               
 
 ```
 [root@kamal-workbox tasks]# pwd

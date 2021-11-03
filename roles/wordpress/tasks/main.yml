@@ -1,0 +1,48 @@
+###############Installing WordPress##########
+
+    - name: "Downloading latest wordpress"
+      get_url:
+        url: "{{ wordpress_latest}}"
+        dest: "/home/{{ username }}/latest.zip"          
+          
+    - name: "Extracting WordPress archive"
+      unarchive:
+        src: "/home/{{ username }}/latest.zip"
+        dest: "/home/{{ username }}/"
+        remote_src: true
+
+    - name: "Copying WordPress files to public_html"
+      copy:
+        src: "/home/{{ username }}/wordpress/"
+        dest: "/home/{{ username }}/public_html/"
+        remote_src: true
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        
+###############Setting DB,user and privilege#
+    - name: "Create WordPress DB"
+      mysql_db:
+        name: "{{ wp_db }}"
+        state: present          
+
+    - name: "Create Wordpress database user"
+      mysql_user:
+        user: "{{ wp_db_user }}"
+        password: "{{ wp_user_pass }}"
+        state: present
+        priv: "{{ wp_db }}.*:ALL"
+
+    - name: "Setting wordpress config"
+      template: 
+        src: wp_config.tmpl
+        dest: "/home/{{ username }}/public_html/wp-config.php"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+
+    - name: "Removing Wordpress Archive and extracted data"
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/home/{{ username }}/latest.zip"
+        - "/home/{{ username }}/wordpress"

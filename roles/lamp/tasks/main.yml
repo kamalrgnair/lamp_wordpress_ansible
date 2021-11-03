@@ -1,0 +1,106 @@
+###############ApacheWebserver###############          
+
+- name: "Installing Apache-Webserver"
+  yum:
+    name: httpd
+    state: present
+  notify:
+    - restart_httpd_service
+  
+- name: "Starting Apache-Webserver-service"
+  service:
+    name: httpd
+    state: started
+
+- name: "Enabling Apache-Webserver-service"
+  service:
+    name: httpd
+    enabled: true
+
+###############Mariadbserver#################        
+
+- name: "Installing Mariadb server and dependency"
+  yum:
+    name: 
+      - mariadb-server
+      - MySQL-python            
+    state: present
+      
+- name: "Starting Mariadb server"
+  service:
+    name: mariadb
+    state: started        
+
+- name: "Enabling Maridb server"
+  service:
+    name: mariadb
+    enabled: true
+
+- name: "Setting Mariadb root password"
+  ignore_errors: true
+  mysql_user:
+    login_user: "root"
+    login_password: ""
+    user: "root"
+    password: "{{ mysql_root_password }}"
+    host_all: true
+      
+- name: "Removing anonymous users"
+  mysql_user:
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    name: ""
+    state: absent
+    host_all: true
+
+- name: "Removing Test databases"
+  mysql_db:
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    name: "test"
+    state: absent
+
+- name: "setting MySql root login without prompting"
+  template:
+    src: cnf.tmpl
+    dest: "/root/.my.cnf"
+    owner: "root"
+    group: "root"
+
+###############PHP Installation##############        
+- name: "Installing PHP"
+  shell: amazon-linux-extras install php8.0 -y
+  notify:
+    - restart_httpd_service    
+###############Setting Docroot for Domain####
+
+- name: "Add user account"
+  user:  
+    name: "{{ username }}"
+    comment: "{{ username}}"
+    shell: "{{ shell_access}}"
+    password: "{{ user_password | password_hash('sha512') }}"
+
+- name: "Set secure persmission for {{ username }} home directory"
+  file: 
+    path: "/home/{{ username }}"
+    state: directory
+    mode: 0711
+
+- name: "Creating public_html directory"
+  file:
+    path: "/home/{{ username }}/public_html"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"        
+
+###############Creating domain virtualhost###
+
+- name: "Creating {{ domain_name }} virtualhost"
+  template:
+    src: virtualhost.tmpl
+    dest: "/etc/httpd/conf.d/{{ domain_name }}.conf"
+    owner: "root"
+    group: "root"
+  notify:
+    - restart_httpd_service

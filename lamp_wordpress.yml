@@ -1,0 +1,7 @@
+---
+- name: "Lamp-wordpress"
+  hosts: lamp_wordpress
+  become: true
+  roles:
+    - lamp
+    - wordpress      

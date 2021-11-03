@@ -1,0 +1,4 @@
+wp_db: "{{ username }}_wpdb"
+wp_db_user: "{{username }}_wpusr"
+wp_user_pass: "wp@mkduo"
+wordpress_latest: "https://wordpress.org/latest.zip"

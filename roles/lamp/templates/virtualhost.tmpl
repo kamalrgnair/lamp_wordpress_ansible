@@ -1,0 +1,9 @@
+<VirtualHost *:{{web_port}}>
+  ServerName {{ domain_name }}
+  ServerAlias {{ domain_name }} www.{{ domain_name }}
+  DocumentRoot /home/{{username}}/public_html
+  <Directory /home/{{username}}/public_html>
+      Require all granted
+      AllowOverride all
+  </Directory>
+</VirtualHost>

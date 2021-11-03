@@ -1,0 +1,8 @@
+###############Lamp variables################
+mysql_root_password: "mypassword#123"
+username: "mkduo"
+user_password: new123@456
+shell_access: "/bin/bash"
+web_port: 80
+domain_name: "mkduo.in"
+

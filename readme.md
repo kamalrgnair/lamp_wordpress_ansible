@@ -314,7 +314,7 @@ password="{{ mysql_root_password }}"
 
 
 
-* **wordress role**
+* **wordpress role**
 
 Worpress role is for installing latest WorPress, setting worpdress database, user and privilage.
 

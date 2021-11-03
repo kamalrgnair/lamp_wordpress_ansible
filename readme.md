@@ -242,7 +242,7 @@ These main tasks for lamp role are written to file ```    lamp/tasks/main.yml```
 [root@kamal-workbox tasks]#
 ```
 
-```Variables for lamp role```
+*Variables for lamp role*
 
 Variables for this role is declared in file ```lamp/vars/main.yml```
 
@@ -261,7 +261,7 @@ domain_name: "mkduo.in"
 [root@kamal-workbox vars]#
 ```
 
-```Adding handlers to playbook```
+*Adding handlers to playbook*
 
 Handlers are tasks that only run when notified. Handlers are used in this project to restart apache webserver whenever configuration of this service got changed by task, ```notify```directive is used for this. In the ```lamp/tasks/main.yml``` file you can see ```notify``` directive is used when ever those taks modify this service configuration. Regardless of how many tasks notify a handler, it will run only once, after all of the tasks completed in a playbook.
 

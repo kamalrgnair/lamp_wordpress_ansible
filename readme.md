@@ -495,7 +495,7 @@ Main playbook file for executing this project is under ```/root/lamp_wordpress_p
 [root@kamal-workbox lamp_wordpress_project]# 
 ```
 
-Check playbook syntax and run the Playbook 
+Check playbook syntax and run the playbook 
 
 ```
 [root@kamal-workbox lamp_wordpress_project]# ansible-playbook -i hosts lamp_wordpress.yml --syntax-check

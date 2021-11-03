@@ -595,3 +595,5 @@ PLAY RECAP *********************************************************************
 #### Conclusion
 
 Using the steps in this document I've setup lamp and deploy wordpress onusing ansible playbook. Using ansible we can run the tasks on mulitple targets server, it will be easy, error free and saves much time when compared to performing this setups manually in multiple target servers.
+
+Thank you!!!
